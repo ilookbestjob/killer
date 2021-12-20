@@ -1,0 +1,204 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.processwindow {
+  width: 98%;
+  height: 90%;
+  background-color: #fafafa;
+  box-shadow: 0px 0px 7px 5px rgba(0, 0, 0, 0.132);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 30px 60px 60px 60px 30px 1fr;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.processwindow__header {
+  display: flex;
+  align-items: center;
+  background-color: rgb(10, 93, 141);
+  color: #fff;
+  padding-left: 20px;
+}
+.processwindow__menu {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  padding: 10px;
+  align-items: flex-end;
+}
+.killbutton,
+.refreshbutton {
+  padding: 5px 10px;
+  background-color: crimson;
+  color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 2px;
+}
+
+.buttoncontainer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+.refreshbutton {
+  background-color: forestgreen;
+}
+
+.refreshbutton:hover {
+  background-color: rgb(67, 175, 67);
+}
+
+.killbutton:hover {
+  background-color: rgb(224, 53, 87);
+}
+
+.processwindow__data {
+  width: 100%;
+  height: 100%;;
+  overflow-y: scroll;
+}
+
+.process,
+.processtitle {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 20px 130px 70px 100px 170px 70px 70px 1fr;
+  grid-column-gap: 20px;
+}
+
+.process__checkbox {
+}
+.process__id {
+}
+.process__user {
+}
+.process__host {
+}
+.process__db {
+}
+.process__time {
+}
+.process__info {
+}
+
+.processtitle div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.processtitle {
+  background-color: #e0dede;
+}
+
+.processtitle__checkbox {
+}
+.processtitle__id {
+}
+.processtitle__user {
+}
+.processtitle__host {
+}
+.processtitle__db {
+}
+.processtitle__time {
+}
+.processtitle__info {
+}
+
+.processwindow__servers, .processwindow__types {
+  padding-left: 30px;
+}
+.server {
+  display: inline-block;
+  background: #bbb
+    linear-gradient(
+      rgba(255, 255, 255, 0.144) 0%,
+      rgba(255, 255, 255, 0.199) 50%,
+      transparent 50%,
+      transparent 100%
+    );
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin: 5px 2px;
+  margin-top: 20px;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+}
+
+.server:hover {
+  background: rgb(20, 122, 180)
+    linear-gradient(
+      rgba(255, 255, 255, 0.144) 0%,
+      rgba(255, 255, 255, 0.199) 50%,
+      transparent 50%,
+      transparent 100%
+    );
+  color: #fff;
+}
+
+.server_selected {
+  display: inline-block;
+  background: rgb(10, 93, 141)
+    linear-gradient(
+      rgba(255, 255, 255, 0.144) 0%,
+      rgba(255, 255, 255, 0.199) 50%,
+      transparent 50%,
+      transparent 100%
+    );
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin: 5px 2px;
+  margin-top: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.type {
+  display: inline-block;
+  background: #bbb
+    linear-gradient(
+      rgba(255, 255, 255, 0.144) 0%,
+      rgba(255, 255, 255, 0.199) 50%,
+      transparent 50%,
+      transparent 100%
+    );
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin: 5px 2px;
+  margin-top: 20px;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+}
+
+.type:hover {
+  background: rgb(20, 122, 180)
+    linear-gradient(
+      rgba(255, 255, 255, 0.144) 0%,
+      rgba(255, 255, 255, 0.199) 50%,
+      transparent 50%,
+      transparent 100%
+    );
+  color: #fff;
+}
+
+.type_selected {
+  display: inline-block;
+  background: rgb(10, 93, 141)
+    linear-gradient(
+      rgba(255, 255, 255, 0.144) 0%,
+      rgba(255, 255, 255, 0.199) 50%,
+      transparent 50%,
+      transparent 100%
+    );
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin: 5px 2px;
+  margin-top: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+
