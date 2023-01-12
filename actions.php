@@ -1,16 +1,18 @@
 <?php
+ini_set('display_errors', 0);
 
-ini_set('display_errors',0);
 require "killer_class.php";
-
 $killerobj = new killer();
+$killerobj->checkproc(__FILE__,1); //имя процесса, количество допустимых процессов
+
+
 
 
 if (isset($_GET['action'])) {
 
     switch ($_GET['action']) {
         case "get":
-            
+
             $r = $killerobj->getProcessList($_GET['server']);
             usort($r, function ($proc1, $proc2) {
                 if ($proc1->Time * 1 == $proc2->Time * 1)
@@ -25,6 +27,18 @@ if (isset($_GET['action'])) {
 
             break;
 
+
+        case "getPHP":
+
+            $r = $killerobj->getPHPProcessList($_GET['server']);
+            
+            echo json_encode($r);
+
+
+
+
+
+            break;
 
         case "kill":
             if (isset($_GET['procs'])) {

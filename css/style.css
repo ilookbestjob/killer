@@ -23,7 +23,7 @@ body {
 }
 .processwindow__menu {
   display: grid;
-  grid-template-columns: 1fr 300px;
+  grid-template-columns: 500px 1fr 300px;
   padding: 10px;
   align-items: flex-end;
 }
@@ -56,7 +56,7 @@ body {
 
 .processwindow__data {
   width: 100%;
-  height: 100%;;
+  height: 100%;
   overflow-y: scroll;
 }
 
@@ -108,7 +108,8 @@ body {
 .processtitle__info {
 }
 
-.processwindow__servers, .processwindow__types {
+.processwindow__servers,
+.processwindow__types {
   padding-left: 30px;
 }
 .server {
@@ -201,4 +202,17 @@ body {
   cursor: pointer;
 }
 
+.searchcontainer {
+  width: 100%;
+}
+.search {
+  width: 100%;
+  height:30px;
+  border:#e7e3e3 solid 1px;
+}
 
+.search::placeholder{
+
+  color: #fafafa;
+  
+}

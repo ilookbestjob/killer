@@ -10,19 +10,25 @@ class killer
 
     private $servers = [];
 
+    private $server = '192.168.0.65';
+    private $base = 'zod00';
+    private $user = 'nt';
+    private $bdpassword = 'pr04ptz3';
+
+
     function __construct()
     {
         $this->servers = [
             null,
 
 
-            new Server('192.168.0.61', "", '', '', '', "Сервер Team"),
-            new Server('212.109.14.195', "", '', '', '', "Сервер Web"),
+            new Server('192.168.0.61', "3306", 'nt', 'nt', 'pr04ptz3', "Сервер Team"),
+            new Server('192.168.0.67', "3306", 'nordcom', 'vlad', 'ckj;ysqnc', "Сервер Web"),
 
-            new Server('192.168.0.65', "", '', '', '', "ЦОД-0"),
-            new Server('192.168.0.65', "", '', '', '', "ЦОД-1 (ПТЗ)"),
-            new Server('192.168.1.199', "", '', '', '', "ЦОД-2 (СПБ)"),
-            new Server('91.107.32.96', "", '', '', '', "ЦОД-3 (МСК)"),
+            new Server('192.168.0.65', "3306", 'zod00', 'nt', 'pr04ptz3', "ЦОД-0"),
+            new Server('192.168.0.65', "3306", 'zod01', 'nt', 'pr04ptz3', "ЦОД-1 (ПТЗ)"),
+            new Server('192.168.1.202', "3306", 'zod02', 'nt', 'pr04ptz3', "ЦОД-2 (СПБ)"),
+            new Server('91.107.32.96', "12165", 'zod03', 'nt', 'pr04ptz3', "ЦОД-3 (МСК)", 12167),
 
 
         ];
@@ -71,6 +77,60 @@ class killer
     }
 
 
+
+    function getPHPProcessList($server)
+
+    {
+
+        if ($server != 0) {
+
+            return file_get_contents("http://" . $this->servers[$server]->server . ":" . $this->servers[$server]->httpport . "/status?full&json");
+        }
+    }
+
+
+    function getPHPLocalProcessList()
+    {
+
+
+        $addr = "http://" . $_SERVER['SERVER_ADDR'] . "/status?full&json";
+        return file_get_contents($addr);
+    }
+
+    function findServerPort()
+    {
+
+        foreach ($this->servers as $searchItem) {
+            if ($_SERVER['SERVER_ADDR'] == $searchItem->server) return $searchItem->httpport;
+        }
+        return -1;
+    }
+
+
+
+    function checkproc($file, $limit)
+    {
+
+   
+
+        $procs = json_decode($this->getPHPLocalProcessList());
+        $ctr = 0;
+        foreach ($procs->processes as $pocess) {
+         
+
+            if ($pocess->script == $file) {
+              $ctr++;
+
+                if ($ctr > $limit) {
+                    echo "Превышен лимит ($limit) для скрипта $file";
+                    exit;
+                }
+            }
+        }
+    }
+
+
+
     function killProcessList($processes, $server)
 
     {
@@ -94,7 +154,7 @@ class killer
     {
         $result = [];
         for ($t = 0; $t <= count($this->servers); $t++) {
-            $result[] = $this->servers[$t]->comment;
+            $result[] = $this->servers[$t];
         }
         return json_encode($result);
     }
