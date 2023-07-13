@@ -11,7 +11,7 @@
         <div class="processwindow__header">Процессы ZOD</div>
 
         <div class="processwindow__types">
-            <div class="type" id="type1" onclick="settype(1)" >MySQL</div>
+            <div class="type_selected" id="type1" onclick="settype(1)" >MySQL</div>
             <div class="type" id="type2" onclick="settype(2)">PHP</div>
         </div>
 
@@ -24,7 +24,9 @@
         <div class="processwindow__menu">
             <div>
                 <input type="checkbox" name="" id="notnull" checked> показывать пустые
+                <input type="checkbox" name="" id="autoupdate" checked> автобновление
             </div>
+            <div class="searchcontainer"><input type="text" class="search" placeholder="Поиск"></div>
             <div class="buttoncontainer">
                 <div class="refreshbutton">&#11119;</div>
                 <div class="killbutton">Завершить</div>
