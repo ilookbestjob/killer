@@ -26,11 +26,11 @@ class killer
             new Server('192.168.0.67', "3306", 'nordcom', 'vlad', 'ckj;ysqnc', "Сервер Web"),
             new Server('192.168.0.69', "3306", 'useraction', 'user', '123', "Сервер BigData"),
 
-            new Server('192.168.0.65', "3306", 'zod00', 'nt', 'pr04ptz3', "ЦОД-0"),
+            // new Server('192.168.0.65', "3306", 'zod00', 'nt', 'pr04ptz3', "ЦОД-0"),
             new Server('192.168.0.65', "3306", 'zod01', 'nt', 'pr04ptz3', "ЦОД-1 (ПТЗ)"),
-            new Server('192.168.1.202', "3306", 'zod02', 'nt', 'pr04ptz3', "ЦОД-2 (СПБ)"),
-            new Server('91.107.32.96', "12165", 'zod03', 'nt', 'pr04ptz3', "ЦОД-3 (МСК)", 12167),
-
+            new Server('192.168.1.199', "3306", 'zod02', 'nt', 'pr04ptz3', "ЦОД-2 (СПБ)"),
+            //new Server('91.107.32.96', "12165", 'zod03', 'nt', 'pr04ptz3', "ЦОД-3 (МСК)", 12167),
+            new Server('192.168.2.61', "3306", 'zod03', 'nt', 'pr04ptz3', "ЦОД-3 (МСК)"),
 
         ];
     }
@@ -48,17 +48,22 @@ class killer
         return $connection;
     }
 
+    function getServerInfo($server)
+    {
 
+        return file_get_contents("http://" . $this->servers[$server]->server . "/classes/ServerInfo/actions.php");
+    }
 
     function getProcessList($server)
 
     {
-
+        
         if ($server != 0) {
 
             $connection = $this->connectDB($server);
             $sqlresult = mysqli_query($connection, "show full processlist");
             $result = [];
+            if (!$sqlresult) return  ["error" => mysqli_error($connection)];
             while ($temp = mysqli_fetch_assoc($sqlresult)) {
                 $temp = array_merge($temp, array("server" => $this->servers[$server]->comment));
                 $result[] = $temp;
@@ -90,6 +95,16 @@ class killer
     }
 
 
+    function getCRONList($server)
+
+    {
+
+        if ($server != 0) {
+
+            return file_get_contents("http://" . $this->servers[$server]->server . ":" . $this->servers[$server]->httpport . "/cron/cron.php");
+        }
+    }
+
     function getPHPLocalProcessList()
     {
 
@@ -109,21 +124,24 @@ class killer
 
 
 
-    function checkproc($file, $limit)
+    function checkproc($file, $limit, $deb = false)
     {
 
-   
+
 
         $procs = json_decode($this->getPHPLocalProcessList());
         $ctr = 0;
         foreach ($procs->processes as $pocess) {
-         
+
 
             if ($pocess->script == $file) {
-              $ctr++;
+                $ctr++;
 
                 if ($ctr > $limit) {
                     echo "Превышен лимит ($limit) для скрипта $file";
+                    if ($deb) {
+                        $deb->addlog("Превышен лимит ($limit) для скрипта $file");
+                    }
                     exit;
                 }
             }
@@ -161,6 +179,34 @@ class killer
     }
 
 
+
+    function sqlinfo($server)
+    {
+
+
+
+
+        if ($server != 0) {
+
+            $connection = $this->connectDB($server);
+            $sqlresult = mysqli_query($connection, "show databases");
+            $result = [];
+            if (!$sqlresult) return  ["error" => mysqli_error($connection)];
+
+            while ($temp = mysqli_fetch_array($sqlresult)) {
+                mysqli_query($connection, "use " . $temp[0]);
+                $sqlresult2 = mysqli_query($connection, "show table status");
+                while ($temp2 = mysqli_fetch_array($sqlresult2)) {
+                    $temp2 = array_merge($temp2, ["db" => $temp[0]]);
+                    $result[] = $temp2;
+                }
+            }
+
+
+
+            return $result;
+        } 
+    }
 
     /////////////////////utility functions
 

@@ -3,7 +3,7 @@ ini_set('display_errors', 0);
 
 require "killer_class.php";
 $killerobj = new killer();
-$killerobj->checkproc(__FILE__,1); //имя процесса, количество допустимых процессов
+$killerobj->checkproc(__FILE__, 1); //имя процесса, количество допустимых процессов
 
 
 
@@ -26,12 +26,35 @@ if (isset($_GET['action'])) {
 
 
             break;
+        case "getinfo":
 
+            if (!isset($_GET["server"])) exit;
+
+
+            echo $killerobj->getServerInfo($_GET["server"]);
+
+
+
+
+
+            break;
 
         case "getPHP":
 
             $r = $killerobj->getPHPProcessList($_GET['server']);
-            
+
+            echo json_encode($r);
+
+
+
+
+
+            break;
+
+        case "getCRON":
+
+            $r = $killerobj->getCRONList($_GET['server']);
+
             echo json_encode($r);
 
 
@@ -54,6 +77,10 @@ if (isset($_GET['action'])) {
 
 
 
+            break;
+        case "sqlinfo":
+
+            echo json_encode($killerobj->sqlinfo($_GET['server']));
             break;
     }
 }
