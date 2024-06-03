@@ -1,5 +1,17 @@
 <html>
 
+<?php  
+
+ini_set('display_errors', 'On');
+error_reporting(E_ALL);
+
+require_once "killer_class.php";
+
+$killer=new killer();
+$version=$killer->getversion(["index.php","killer_class.php","actions.php","js\\killer.js","css\\style.css"]);
+
+?>
+
 <head></head>
 <title>тест</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -9,7 +21,7 @@
 
 <body>
     <div class="processwindow">
-        <div class="processwindow__header">Процессы ZOD</div>
+        <div class="processwindow__header">Killer<?php echo " v. ".$version ?> </div>
 
         <div class="processwindow__servers">
 

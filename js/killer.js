@@ -13,7 +13,7 @@ let checked = [];
 
 $(function () {
 
-    getServers()
+ getServers()
 
 
 
@@ -661,13 +661,14 @@ const checkKillproc = async () => {
 
 }
 
-const getServers = () => {
+const getServers = async () => {
 
-    fetch("actions.php?action=getservers").then(res => res.json()).then(res => {
+     fetch("actions.php?action=getservers").then(res => res.json()).then(res => {
 
         servers = res;
         buildServers(servers)
         checkGET()
+        setInterval("getServerInfo(currentserver)",10)
 
     })
 }

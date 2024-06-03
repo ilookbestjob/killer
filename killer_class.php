@@ -57,7 +57,7 @@ class killer
     function getProcessList($server)
 
     {
-        
+
         if ($server != 0) {
 
             $connection = $this->connectDB($server);
@@ -205,15 +205,19 @@ class killer
 
 
             return $result;
-        } 
+        }
     }
 
     /////////////////////utility functions
 
 
-
-
-
-
-
+    function getversion($files)
+    {
+        $time = 0;
+        foreach ($files as $file) {
+            $time = filemtime($file) > $time ? filemtime($file) : $time;
+        }
+       
+        return  date("d.m.Y H:i:s", $time);
+    }
 }
